@@ -4,7 +4,7 @@ import Home from './pages/Home/Home'
 import NotFound from './pages/NotFound/NotFound'
 import { StyledAppLayout } from './StyledApp'
 
-function App() {
+const App: React.FunctionComponent<{}> = () => {
     return (
         <StyledAppLayout>
             <Router>
@@ -20,5 +20,4 @@ function App() {
         </StyledAppLayout>
     )
 }
-
 export default App

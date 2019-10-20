@@ -5,9 +5,7 @@ import {
     StyledHomeText,
 } from './StyledHome'
 
-interface HomeProps {}
-
-const Home: React.FunctionComponent<HomeProps> = () => {
+const Home: React.FunctionComponent<{}> = () => {
     return (
         <Fragment>
             <StyledHomeTitle>hi</StyledHomeTitle>
