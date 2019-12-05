@@ -6,6 +6,19 @@ import {
     StyledNodeCircle,
     StyledNodeValue,
 } from './StyledTreeViz'
+import { RootState } from '../../redux/reducers'
+import { NodeModel } from '../../models/TreeViz'
+import { Dispatch, bindActionCreators } from 'redux'
+import { RootAction } from '../../redux/actions'
+import {
+    getTreeFromState,
+    getRootNodeFromState,
+} from '../../redux/reducers/treeVisualizerReducer'
+import {
+    createRootNodeAction,
+    updateTreeAction,
+} from '../../redux/actions/treeVisualizerActions'
+import { connect } from 'react-redux'
 
 /**
  * TODO:
@@ -20,24 +33,29 @@ import {
  * - tree visuals
  */
 
-class NodeModel {
-    value: number
-    leftChild?: NodeModel
-    rightChild?: NodeModel
-    isActive: boolean
-
-    constructor(val: number) {
-        this.value = val
-        this.leftChild = undefined
-        this.rightChild = undefined
-        this.isActive = false
-    }
+interface TreeVizProps {
+    rootNode: NodeModel
+    tree: Array<NodeModel[]>
+    createRootNode: (node: NodeModel) => void
 }
 
-const TreeViz: React.FunctionComponent<{}> = () => {
-    const rootNode = new NodeModel(0)
-    const [tree, setTree] = useState<Array<NodeModel[]>>([])
+const mapStateToProps = (state: RootState) => ({
+    rootNode: getRootNodeFromState(state),
+    tree: getTreeFromState(state),
+})
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+    bindActionCreators(
+        {
+            createRootNode: createRootNodeAction,
+        },
+        dispatch
+    )
 
+const TreeViz: React.FunctionComponent<TreeVizProps> = ({
+    rootNode,
+    tree,
+    createRootNode,
+}) => {
     useEffect(() => {
         // test to see if nodes render correctly
         let curNode = rootNode
@@ -58,33 +76,8 @@ const TreeViz: React.FunctionComponent<{}> = () => {
         curNode = rootNode.leftChild!.leftChild!.leftChild!
         curNode.leftChild = new NodeModel(11)
 
-        renderNodes()
+        createRootNode(rootNode)
     }, [])
-
-    const renderNodes = () => {
-        let queue: NodeModel[] = []
-        queue.push(rootNode)
-
-        let nodesLevels: Array<NodeModel[]> = []
-        while (queue.length > 0) {
-            let levelSize = queue.length
-
-            let curLevel: NodeModel[] = []
-            while (levelSize > 0) {
-                let curNode: NodeModel = queue.shift() as NodeModel
-
-                curLevel.push(curNode)
-
-                if (curNode!.leftChild) queue.push(curNode!.leftChild)
-                if (curNode!.rightChild) queue.push(curNode!.rightChild)
-
-                levelSize--
-            }
-            nodesLevels.push(curLevel)
-        }
-
-        setTree([...nodesLevels])
-    }
 
     return (
         <StyledPageLayout>
@@ -98,7 +91,11 @@ const TreeViz: React.FunctionComponent<{}> = () => {
         </StyledPageLayout>
     )
 }
-export default TreeViz
+const ConnectTreeViz = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TreeViz)
+export default ConnectTreeViz
 
 interface TreeProps {
     tree: Array<NodeModel[]>
@@ -144,8 +141,6 @@ const Node: React.FunctionComponent<NodeProps> = ({
     isActive,
     value,
 }) => {
-    /** TODO: proper arrangement of nodes on x-axis */
-
     return (
         <g>
             <StyledNodeCircle
