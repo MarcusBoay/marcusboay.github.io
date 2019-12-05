@@ -18,8 +18,12 @@ export const StyledPageSideCode = styled.div`
     width: 50%;
 `
 
-export const StyledNodeCircle = styled.circle<{ isActive: boolean }>`
-    fill: ${props => (props.isActive ? `lime` : `white`)};
+export const StyledNodeCircle = styled.circle<{
+    isActive: boolean
+    hasVisited: boolean
+}>`
+    fill: ${props =>
+        props.isActive ? `green` : props.hasVisited ? `lime` : `white`};
     stroke: black;
     stroke-width: 2;
 `

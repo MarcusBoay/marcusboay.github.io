@@ -16,7 +16,7 @@ import {
 } from '../../redux/reducers/treeVisualizerReducer'
 import {
     createRootNodeAction,
-    updateTreeAction,
+    preOrderTraversalAction,
 } from '../../redux/actions/treeVisualizerActions'
 import { connect } from 'react-redux'
 
@@ -37,6 +37,7 @@ interface TreeVizProps {
     rootNode: NodeModel
     tree: Array<NodeModel[]>
     createRootNode: (node: NodeModel) => void
+    preOrderTraversal: () => void
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -47,6 +48,7 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
     bindActionCreators(
         {
             createRootNode: createRootNodeAction,
+            preOrderTraversal: preOrderTraversalAction,
         },
         dispatch
     )
@@ -55,6 +57,7 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
     rootNode,
     tree,
     createRootNode,
+    preOrderTraversal,
 }) => {
     useEffect(() => {
         // test to see if nodes render correctly
@@ -86,7 +89,13 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
             </StyledPageSideTree>
             <StyledPageSideCode>
                 <p>this is where the code should live</p>
-                <button onClick={() => {}}>do dfs</button>
+                <button
+                    onClick={() => {
+                        preOrderTraversal()
+                    }}
+                >
+                    do dfs
+                </button>
             </StyledPageSideCode>
         </StyledPageLayout>
     )
@@ -117,6 +126,7 @@ const Tree: React.FunctionComponent<TreeProps> = ({ tree }) => {
                         radius={radius}
                         position={position}
                         isActive={node.isActive}
+                        hasVisited={node.hasVisited}
                         value={node.value}
                     />
                 ))
@@ -131,6 +141,7 @@ interface NodeProps {
     radius: number
     position: number
     isActive: boolean
+    hasVisited: boolean
     value: number
 }
 const Node: React.FunctionComponent<NodeProps> = ({
@@ -139,6 +150,7 @@ const Node: React.FunctionComponent<NodeProps> = ({
     radius,
     position,
     isActive,
+    hasVisited,
     value,
 }) => {
     return (
@@ -148,6 +160,7 @@ const Node: React.FunctionComponent<NodeProps> = ({
                 cy={4 * position * y}
                 r={radius}
                 isActive={isActive}
+                hasVisited={hasVisited}
             />
             <StyledNodeValue x={position * x} y={4 * position * y} dy=".3em">
                 {value}

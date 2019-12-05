@@ -9,7 +9,6 @@ import store from './redux/store'
 
 const App = () => {
     return (
-        //fix this
         <Provider store={store}>
             <StyledAppLayout>
                 <Router>

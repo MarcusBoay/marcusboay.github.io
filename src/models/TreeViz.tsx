@@ -8,6 +8,7 @@ export class NodeModel {
     rightChild?: NodeModel
     // view
     isActive: boolean
+    hasVisited: boolean
 
     constructor(val: number) {
         this.id = uuidv1()
@@ -15,5 +16,6 @@ export class NodeModel {
         this.leftChild = undefined
         this.rightChild = undefined
         this.isActive = false
+        this.hasVisited = false
     }
 }
