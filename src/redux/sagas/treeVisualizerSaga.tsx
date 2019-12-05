@@ -75,11 +75,14 @@ function* preOrderTraversalSagaHelper(curNode: NodeModel): any {
     curNode.hasVisited = true
     yield putResolve(updateTreeAction())
     yield delay(250)
-    curNode.isActive = false
-    yield putResolve(updateTreeAction())
     yield call(preOrderTraversalSagaHelper, curNode.leftChild!)
     yield call(preOrderTraversalSagaHelper, curNode.rightChild!)
+    curNode.isActive = false
+    yield putResolve(updateTreeAction())
+    yield delay(250)
 }
+
+//TODO: in order, post order, level order
 
 function* treeVisualizerSaga() {
     yield all([

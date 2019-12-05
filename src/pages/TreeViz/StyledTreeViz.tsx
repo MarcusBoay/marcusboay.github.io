@@ -32,3 +32,8 @@ export const StyledNodeValue = styled.text`
     pointer-events: none;
     text-anchor: middle;
 `
+
+export const StyledNodeBranch = styled.line`
+    stroke: black;
+    stroke-width: 2;
+`

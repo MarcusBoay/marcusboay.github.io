@@ -5,6 +5,7 @@ import {
     StyledPageSideCode,
     StyledNodeCircle,
     StyledNodeValue,
+    StyledNodeBranch,
 } from './StyledTreeViz'
 import { RootState } from '../../redux/reducers'
 import { NodeModel } from '../../models/TreeViz'
@@ -22,15 +23,21 @@ import { connect } from 'react-redux'
 
 /**
  * TODO:
- * - generate trees
- * 	- manual input (details tbd, maybe just an array for now)
+ * - generate trees :
  * 	- dropdown (binary tree, complete, incomplete, depth, how many nodes)
+ * 	- user clicking near node
  *
  * - user can pick what algo to run from dropdown (v1, no interaction with code, BFS, DFS, pre-order, post-order, in-order)
  *
- * - highlight line that is being executed and show it on tree
+ * - highlight line of code that is being executed and show it on tree
  *
- * - tree visuals
+ * - adding nodes, updating nodes, deleting nodes (by user)
+ *
+ * - dropdown of algo
+ *
+ * - line between parent and child node
+ *
+ * - visual sexiness
  */
 
 interface TreeVizProps {
@@ -114,22 +121,57 @@ const Tree: React.FunctionComponent<TreeProps> = ({ tree }) => {
     const spacing: number = 10
     const position: number = radius + spacing / 2
 
-    /** TODO: lines between parent and children nodes */
     return (
         <>
             {tree.map((levelNodes, level) =>
-                levelNodes.map((node, index) => (
-                    <Node
-                        key={String(level) + '.' + String(node.value)}
-                        x={Math.pow(2, tree.length - level) * (index + 0.5)}
-                        y={level + 1}
-                        radius={radius}
-                        position={position}
-                        isActive={node.isActive}
-                        hasVisited={node.hasVisited}
-                        value={node.value}
-                    />
-                ))
+                levelNodes.map((node, index) => {
+                    const x =
+                        Math.pow(2, tree.length - level) *
+                        (index + 0.5) *
+                        position
+                    const y = 4 * (level + 1) * position
+
+                    //need to fix index value, geometry math
+                    const xLeftChild =
+                        Math.pow(2, tree.length - level - 1) *
+                        (2 * index + 0.5) *
+                        position
+                    //need to fix index value, geometry math
+                    const xRightChild =
+                        Math.pow(2, tree.length - level - 1) *
+                        (2 * index + 0.5 + 1) *
+                        position
+                    const yChild = 4 * (level + 2) * position
+
+                    return (
+                        <>
+                            <Node
+                                key={String(level) + '.' + String(node.value)}
+                                x={x}
+                                y={y}
+                                level={level}
+                                radius={radius}
+                                node={node}
+                            />
+                            {node.leftChild && (
+                                <StyledNodeBranch
+                                    x1={x - radius}
+                                    y1={y + radius}
+                                    x2={xLeftChild + radius}
+                                    y2={yChild - radius}
+                                />
+                            )}
+                            {node.rightChild && (
+                                <StyledNodeBranch
+                                    x1={x + radius}
+                                    y1={y + radius}
+                                    x2={xRightChild - radius}
+                                    y2={yChild - radius}
+                                />
+                            )}
+                        </>
+                    )
+                })
             )}
         </>
     )
@@ -138,32 +180,22 @@ const Tree: React.FunctionComponent<TreeProps> = ({ tree }) => {
 interface NodeProps {
     x: number
     y: number
+    level: number
     radius: number
-    position: number
-    isActive: boolean
-    hasVisited: boolean
-    value: number
+    node: NodeModel
 }
-const Node: React.FunctionComponent<NodeProps> = ({
-    x,
-    y,
-    radius,
-    position,
-    isActive,
-    hasVisited,
-    value,
-}) => {
+const Node: React.FunctionComponent<NodeProps> = ({ x, y, radius, node }) => {
     return (
         <g>
             <StyledNodeCircle
-                cx={position * x}
-                cy={4 * position * y}
+                cx={x}
+                cy={y}
                 r={radius}
-                isActive={isActive}
-                hasVisited={hasVisited}
+                isActive={node.isActive}
+                hasVisited={node.hasVisited}
             />
-            <StyledNodeValue x={position * x} y={4 * position * y} dy=".3em">
-                {value}
+            <StyledNodeValue x={x} y={y} dy=".3em">
+                {node.value}
             </StyledNodeValue>
         </g>
     )
