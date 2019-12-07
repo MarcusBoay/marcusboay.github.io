@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { NodeState } from '../../models/TreeViz'
 
 export const StyledPageLayout = styled.div`
     display: flex;
@@ -19,11 +20,16 @@ export const StyledPageSideCode = styled.div`
 `
 
 export const StyledNodeCircle = styled.circle<{
-    isActive: boolean
-    hasVisited: boolean
+    state: NodeState
 }>`
     fill: ${props =>
-        props.isActive ? `green` : props.hasVisited ? `lime` : `white`};
+        props.state === NodeState.INIT
+            ? `white`
+            : props.state === NodeState.VISITING
+            ? `green`
+            : props.state === NodeState.WAITING
+            ? `cyan`
+            : props.state === NodeState.VISITED && `lime`};
     stroke: black;
     stroke-width: 2;
 `

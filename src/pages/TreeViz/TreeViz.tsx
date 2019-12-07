@@ -18,6 +18,10 @@ import {
 import {
     createRootNodeAction,
     preOrderTraversalAction,
+    inOrderTraversalAction,
+    resetNodesAction,
+    postOrderTraversalAction,
+    levelOrderTraversalAction,
 } from '../../redux/actions/treeVisualizerActions'
 import { connect } from 'react-redux'
 
@@ -44,7 +48,11 @@ interface TreeVizProps {
     rootNode: NodeModel
     tree: Array<NodeModel[]>
     createRootNode: (node: NodeModel) => void
+    resetNodes: () => void
     preOrderTraversal: () => void
+    inOrderTraversal: () => void
+    postOrderTraversal: () => void
+    levelOrderTraversal: () => void
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -55,7 +63,11 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
     bindActionCreators(
         {
             createRootNode: createRootNodeAction,
+            resetNodes: resetNodesAction,
             preOrderTraversal: preOrderTraversalAction,
+            inOrderTraversal: inOrderTraversalAction,
+            postOrderTraversal: postOrderTraversalAction,
+            levelOrderTraversal: levelOrderTraversalAction,
         },
         dispatch
     )
@@ -64,7 +76,11 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
     rootNode,
     tree,
     createRootNode,
+    resetNodes,
     preOrderTraversal,
+    inOrderTraversal,
+    postOrderTraversal,
+    levelOrderTraversal,
 }) => {
     useEffect(() => {
         // test to see if nodes render correctly
@@ -95,13 +111,46 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
                 <Tree tree={tree} />
             </StyledPageSideTree>
             <StyledPageSideCode>
+                <p>
+                    TODO: - waiting state of nodes that are still waiting on
+                    some recursive function - make sagas cancellable (only one
+                    traversal action should be happening at any time)
+                </p>
                 <p>this is where the code should live</p>
                 <button
                     onClick={() => {
                         preOrderTraversal()
                     }}
                 >
-                    do dfs
+                    pre order
+                </button>
+                <button
+                    onClick={() => {
+                        inOrderTraversal()
+                    }}
+                >
+                    in order
+                </button>
+                <button
+                    onClick={() => {
+                        postOrderTraversal()
+                    }}
+                >
+                    post order
+                </button>
+                <button
+                    onClick={() => {
+                        levelOrderTraversal()
+                    }}
+                >
+                    level order
+                </button>
+                <button
+                    onClick={() => {
+                        resetNodes()
+                    }}
+                >
+                    reset
                 </button>
             </StyledPageSideCode>
         </StyledPageLayout>
@@ -187,13 +236,7 @@ interface NodeProps {
 const Node: React.FunctionComponent<NodeProps> = ({ x, y, radius, node }) => {
     return (
         <g>
-            <StyledNodeCircle
-                cx={x}
-                cy={y}
-                r={radius}
-                isActive={node.isActive}
-                hasVisited={node.hasVisited}
-            />
+            <StyledNodeCircle cx={x} cy={y} r={radius} state={node.state} />
             <StyledNodeValue x={x} y={y} dy=".3em">
                 {node.value}
             </StyledNodeValue>

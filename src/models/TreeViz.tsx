@@ -7,15 +7,20 @@ export class NodeModel {
     leftChild?: NodeModel
     rightChild?: NodeModel
     // view
-    isActive: boolean
-    hasVisited: boolean
+    state: NodeState
 
     constructor(val: number) {
         this.id = uuidv1()
         this.value = val
         this.leftChild = undefined
         this.rightChild = undefined
-        this.isActive = false
-        this.hasVisited = false
+        this.state = NodeState.INIT
     }
+}
+
+export enum NodeState {
+    INIT,
+    VISITING,
+    WAITING,
+    VISITED,
 }

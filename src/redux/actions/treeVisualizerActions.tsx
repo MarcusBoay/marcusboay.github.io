@@ -42,3 +42,5 @@ export const inOrderTraversalAction = createAction('IN_ORDER_TRAVERSAL')
 export const postOrderTraversalAction = createAction('POST_ORDER_TRAVERSAL')
 
 export const levelOrderTraversalAction = createAction('LEVEL_ORDER_TRAVERSAL')
+
+export const resetNodesAction = createAction('RESET_NODES')
