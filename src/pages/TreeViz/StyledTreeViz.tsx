@@ -30,6 +30,7 @@ export const StyledNodeCircle = styled.circle<{
             : props.state === NodeState.WAITING
             ? `cyan`
             : props.state === NodeState.VISITED && `lime`};
+    transition: 200ms;
     stroke: black;
     stroke-width: 2;
 `
