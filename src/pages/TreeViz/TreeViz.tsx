@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
     StyledPageLayout,
     StyledPageSideTree,
@@ -41,9 +41,12 @@ import { connect } from 'react-redux'
  *
  * - dropdown of algo
  *
- * - line between parent and child node
- *
  * - visual sexiness
+ *
+ * v2:
+ * - if nodes have no children, make them visuallly closer
+ * - make radius of nodes smaller if tree is out of bounds
+ * - zoom on canvas
  */
 
 interface TreeVizProps {

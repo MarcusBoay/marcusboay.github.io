@@ -1,5 +1,12 @@
 const uuidv1 = require('uuid/v1')
 
+export enum NodeState {
+    INIT,
+    VISITING,
+    WAITING,
+    VISITED,
+}
+
 export class NodeModel {
     // data
     id: string
@@ -16,11 +23,4 @@ export class NodeModel {
         this.rightChild = undefined
         this.state = NodeState.INIT
     }
-}
-
-export enum NodeState {
-    INIT,
-    VISITING,
-    WAITING,
-    VISITED,
 }
