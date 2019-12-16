@@ -199,17 +199,27 @@ const Tree: React.FunctionComponent<TreeProps> = ({ tree }) => {
                         position
                     const y = 4 * (level + 1) * position
 
-                    //need to fix index value, geometry math
                     const xLeftChild =
                         Math.pow(2, tree.length - level - 1) *
                         (2 * index + 0.5) *
                         position
-                    //need to fix index value, geometry math
                     const xRightChild =
                         Math.pow(2, tree.length - level - 1) *
                         (2 * index + 0.5 + 1) *
                         position
                     const yChild = 4 * (level + 2) * position
+
+                    const thetaLeft = Math.atan(
+                        Math.abs(x - xLeftChild) / Math.abs(y - yChild)
+                    )
+                    const thetaRight = Math.atan(
+                        Math.abs(x - xRightChild) / Math.abs(y - yChild)
+                    )
+
+                    const leftBranchXOffset = radius * Math.sin(thetaLeft)
+                    const rightBranchXOffset = radius * Math.sin(thetaRight)
+                    const leftBranchYOffset = radius * Math.cos(thetaLeft)
+                    const rightBranchYOffset = radius * Math.cos(thetaRight)
 
                     return (
                         <>
@@ -223,18 +233,18 @@ const Tree: React.FunctionComponent<TreeProps> = ({ tree }) => {
                             />
                             {node.leftChild && (
                                 <StyledNodeBranch
-                                    x1={x - radius}
-                                    y1={y + radius}
-                                    x2={xLeftChild + radius}
-                                    y2={yChild - radius}
+                                    x1={x - leftBranchXOffset}
+                                    y1={y + leftBranchYOffset}
+                                    x2={xLeftChild}
+                                    y2={yChild}
                                 />
                             )}
                             {node.rightChild && (
                                 <StyledNodeBranch
-                                    x1={x + radius}
-                                    y1={y + radius}
-                                    x2={xRightChild - radius}
-                                    y2={yChild - radius}
+                                    x1={x + rightBranchXOffset}
+                                    y1={y + rightBranchYOffset}
+                                    x2={xRightChild}
+                                    y2={yChild}
                                 />
                             )}
                         </>
