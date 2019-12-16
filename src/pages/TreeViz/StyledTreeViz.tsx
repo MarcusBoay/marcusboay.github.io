@@ -24,6 +24,7 @@ export const StyledPageSideCode = styled.div`
 
 export const StyledNodeCircle = styled.circle<{
     state: NodeState
+    speed: number
 }>`
     fill: ${props =>
         props.state === NodeState.INIT
@@ -33,7 +34,7 @@ export const StyledNodeCircle = styled.circle<{
             : props.state === NodeState.WAITING
             ? `#5757B2`
             : props.state === NodeState.VISITED && `#41637F`};
-    transition: 200ms;
+    transition: ${props => props.speed + 'ms'};
     stroke: #18cae6;
     stroke-width: 2;
     color: #18cae6;

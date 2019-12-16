@@ -119,7 +119,7 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
     return (
         <StyledPageLayout>
             <StyledPageSideTree>
-                <Tree tree={tree} />
+                <Tree tree={tree} speed={executionSpeed} />
             </StyledPageSideTree>
             <StyledPageSideCode>
                 <p>this is where the code should live</p>
@@ -182,8 +182,9 @@ export default ConnectTreeViz
 
 interface TreeProps {
     tree: Array<NodeModel[]>
+    speed: number
 }
-const Tree: React.FunctionComponent<TreeProps> = ({ tree }) => {
+const Tree: React.FunctionComponent<TreeProps> = ({ tree, speed }) => {
     const radius: number = 20
     const spacing: number = 10
     const position: number = radius + spacing / 2
@@ -229,6 +230,7 @@ const Tree: React.FunctionComponent<TreeProps> = ({ tree }) => {
                                 level={level}
                                 radius={radius}
                                 node={node}
+                                speed={speed}
                             />
                             {node.leftChild && (
                                 <StyledNodeBranch
@@ -260,11 +262,24 @@ interface NodeProps {
     level: number
     radius: number
     node: NodeModel
+    speed: number
 }
-const Node: React.FunctionComponent<NodeProps> = ({ x, y, radius, node }) => {
+const Node: React.FunctionComponent<NodeProps> = ({
+    x,
+    y,
+    radius,
+    node,
+    speed,
+}) => {
     return (
         <g>
-            <StyledNodeCircle cx={x} cy={y} r={radius} state={node.state} />
+            <StyledNodeCircle
+                cx={x}
+                cy={y}
+                r={radius}
+                state={node.state}
+                speed={speed}
+            />
             <StyledNodeValue x={x} y={y} dy=".3em">
                 {node.value}
             </StyledNodeValue>
