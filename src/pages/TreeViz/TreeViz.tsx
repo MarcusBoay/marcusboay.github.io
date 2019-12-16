@@ -122,10 +122,6 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
                 <Tree tree={tree} />
             </StyledPageSideTree>
             <StyledPageSideCode>
-                <p>
-                    TODO: - make sagas cancellable (only one traversal action
-                    should be happening at any time)
-                </p>
                 <p>this is where the code should live</p>
                 <button
                     onClick={() => {

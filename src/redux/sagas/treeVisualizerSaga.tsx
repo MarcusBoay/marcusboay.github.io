@@ -71,6 +71,8 @@ function* updateTreeSaga() {
 
 function* preOrderTraversalSaga() {
     try {
+        yield put(resetNodesAction())
+
         const rootNode = yield select(getRootNodeFromState)
 
         const preOrderTask = yield fork(preOrderTraversalSagaHelper, rootNode)
@@ -102,6 +104,8 @@ function* preOrderTraversalSagaHelper(curNode: NodeModel): any {
 
 function* inOrderTraversalSaga() {
     try {
+        yield put(resetNodesAction())
+
         const rootNode = yield select(getRootNodeFromState)
 
         const inOrderTask = yield fork(inOrderTraversalSagaHelper, rootNode)
@@ -132,6 +136,8 @@ function* inOrderTraversalSagaHelper(curNode: NodeModel): any {
 
 function* postOrderTraversalSaga() {
     try {
+        yield put(resetNodesAction())
+
         const rootNode = yield select(getRootNodeFromState)
 
         const postOrderTask = yield fork(postOrderTraversalSagaHelper, rootNode)
@@ -162,6 +168,8 @@ function* postOrderTraversalSagaHelper(curNode: NodeModel): any {
 
 function* levelOrderTraversalSaga() {
     try {
+        yield put(resetNodesAction())
+
         const levelOrderTask = yield fork(levelOrderTraversalSagaHelper)
 
         yield take(resetNodesAction)

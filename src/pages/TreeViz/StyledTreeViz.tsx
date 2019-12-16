@@ -5,6 +5,9 @@ export const StyledPageLayout = styled.div`
     display: flex;
     flex-direction: row;
     width: 100vw;
+    background: #1f1f23;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
 `
 
 export const StyledPageSideTree = styled.svg`
@@ -24,23 +27,25 @@ export const StyledNodeCircle = styled.circle<{
 }>`
     fill: ${props =>
         props.state === NodeState.INIT
-            ? `white`
+            ? `#1F1F23`
             : props.state === NodeState.VISITING
-            ? `green`
+            ? `#44B3C4`
             : props.state === NodeState.WAITING
-            ? `cyan`
-            : props.state === NodeState.VISITED && `lime`};
+            ? `#5757B2`
+            : props.state === NodeState.VISITED && `#41637F`};
     transition: 200ms;
-    stroke: black;
+    stroke: #18cae6;
     stroke-width: 2;
+    color: #18cae6;
 `
 
 export const StyledNodeValue = styled.text`
     pointer-events: none;
     text-anchor: middle;
+    fill: #d0db97;
 `
 
 export const StyledNodeBranch = styled.line`
-    stroke: black;
+    stroke: #18cae6;
     stroke-width: 2;
 `
