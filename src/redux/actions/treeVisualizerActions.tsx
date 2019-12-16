@@ -44,3 +44,9 @@ export const postOrderTraversalAction = createAction('POST_ORDER_TRAVERSAL')
 export const levelOrderTraversalAction = createAction('LEVEL_ORDER_TRAVERSAL')
 
 export const resetNodesAction = createAction('RESET_NODES')
+
+// Settings
+export const updateExecutionSpeedAction = createAction(
+    'UPDATE_EXECUTION_SPEED',
+    resolve => (speed: number) => resolve(speed)
+)

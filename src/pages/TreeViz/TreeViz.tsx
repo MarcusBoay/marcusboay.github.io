@@ -14,6 +14,7 @@ import { RootAction } from '../../redux/actions'
 import {
     getTreeFromState,
     getRootNodeFromState,
+    getExecutionSpeedFromState,
 } from '../../redux/reducers/treeVisualizerReducer'
 import {
     createRootNodeAction,
@@ -22,6 +23,7 @@ import {
     resetNodesAction,
     postOrderTraversalAction,
     levelOrderTraversalAction,
+    updateExecutionSpeedAction,
 } from '../../redux/actions/treeVisualizerActions'
 import { connect } from 'react-redux'
 
@@ -47,17 +49,20 @@ import { connect } from 'react-redux'
 interface TreeVizProps {
     rootNode: NodeModel
     tree: Array<NodeModel[]>
+    executionSpeed: number
     createRootNode: (node: NodeModel) => void
     resetNodes: () => void
     preOrderTraversal: () => void
     inOrderTraversal: () => void
     postOrderTraversal: () => void
     levelOrderTraversal: () => void
+    updateExecutionSpeed: (speed: number) => void
 }
 
 const mapStateToProps = (state: RootState) => ({
     rootNode: getRootNodeFromState(state),
     tree: getTreeFromState(state),
+    executionSpeed: getExecutionSpeedFromState(state),
 })
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
     bindActionCreators(
@@ -68,6 +73,7 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
             inOrderTraversal: inOrderTraversalAction,
             postOrderTraversal: postOrderTraversalAction,
             levelOrderTraversal: levelOrderTraversalAction,
+            updateExecutionSpeed: updateExecutionSpeedAction,
         },
         dispatch
     )
@@ -75,12 +81,14 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
 const TreeViz: React.FunctionComponent<TreeVizProps> = ({
     rootNode,
     tree,
+    executionSpeed,
     createRootNode,
     resetNodes,
     preOrderTraversal,
     inOrderTraversal,
     postOrderTraversal,
     levelOrderTraversal,
+    updateExecutionSpeed,
 }) => {
     useEffect(() => {
         // test to see if nodes render correctly
@@ -112,9 +120,8 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
             </StyledPageSideTree>
             <StyledPageSideCode>
                 <p>
-                    TODO: - waiting state of nodes that are still waiting on
-                    some recursive function - make sagas cancellable (only one
-                    traversal action should be happening at any time)
+                    TODO: - make sagas cancellable (only one traversal action
+                    should be happening at any time)
                 </p>
                 <p>this is where the code should live</p>
                 <button
@@ -152,6 +159,18 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
                 >
                     reset
                 </button>
+                <div>
+                    <input
+                        type="range"
+                        min="50"
+                        max="3000"
+                        value={executionSpeed}
+                        onChange={event => {
+                            updateExecutionSpeed(Number(event.target.value))
+                        }}
+                    />
+                    <span>Speed</span>
+                </div>
             </StyledPageSideCode>
         </StyledPageLayout>
     )

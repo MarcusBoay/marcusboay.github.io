@@ -6,6 +6,9 @@ import {
     putResolve,
     delay,
     call,
+    take,
+    fork,
+    cancel,
 } from 'redux-saga/effects'
 import { getType, ActionType } from 'typesafe-actions'
 import {
@@ -20,7 +23,10 @@ import {
     levelOrderTraversalAction,
 } from '../actions/treeVisualizerActions'
 import { NodeModel, NodeState } from '../../models/TreeViz'
-import { getRootNodeFromState } from '../reducers/treeVisualizerReducer'
+import {
+    getRootNodeFromState,
+    getExecutionSpeedFromState,
+} from '../reducers/treeVisualizerReducer'
 
 function* createRootNodeSaga(action: ActionType<typeof createRootNodeAction>) {
     try {
@@ -67,7 +73,11 @@ function* preOrderTraversalSaga() {
     try {
         const rootNode = yield select(getRootNodeFromState)
 
-        yield call(preOrderTraversalSagaHelper, rootNode)
+        const preOrderTask = yield fork(preOrderTraversalSagaHelper, rootNode)
+
+        yield take(resetNodesAction)
+
+        yield cancel(preOrderTask)
     } catch (e) {
         console.error('preorder traversal saga: something went wrong!', e)
     }
@@ -80,21 +90,25 @@ function* preOrderTraversalSagaHelper(curNode: NodeModel): any {
 
     curNode.state = NodeState.VISITING
     yield putResolve(updateTreeAction())
-    yield delay(250)
+    yield delay(yield select(getExecutionSpeedFromState))
 
     yield call(preOrderTraversalSagaHelper, curNode.leftChild!)
     yield call(preOrderTraversalSagaHelper, curNode.rightChild!)
 
     curNode.state = NodeState.VISITED
     yield putResolve(updateTreeAction())
-    yield delay(250)
+    yield delay(yield select(getExecutionSpeedFromState))
 }
 
 function* inOrderTraversalSaga() {
     try {
         const rootNode = yield select(getRootNodeFromState)
 
-        yield call(inOrderTraversalSagaHelper, rootNode)
+        const inOrderTask = yield fork(inOrderTraversalSagaHelper, rootNode)
+
+        yield take(resetNodesAction)
+
+        yield cancel(inOrderTask)
     } catch (e) {
         console.error('inorder traversal saga: something went wrong!', e)
     }
@@ -107,20 +121,24 @@ function* inOrderTraversalSagaHelper(curNode: NodeModel): any {
 
     curNode.state = NodeState.VISITING
     yield putResolve(updateTreeAction())
-    yield delay(250)
+    yield delay(yield select(getExecutionSpeedFromState))
 
     yield call(inOrderTraversalSagaHelper, curNode.rightChild!)
 
     curNode.state = NodeState.VISITED
     yield putResolve(updateTreeAction())
-    yield delay(250)
+    yield delay(yield select(getExecutionSpeedFromState))
 }
 
 function* postOrderTraversalSaga() {
     try {
         const rootNode = yield select(getRootNodeFromState)
 
-        yield call(postOrderTraversalSagaHelper, rootNode)
+        const postOrderTask = yield fork(postOrderTraversalSagaHelper, rootNode)
+
+        yield take(resetNodesAction)
+
+        yield cancel(postOrderTask)
     } catch (e) {
         console.error('postorder traversal saga: something went wrong!', e)
     }
@@ -135,40 +153,47 @@ function* postOrderTraversalSagaHelper(curNode: NodeModel): any {
 
     curNode.state = NodeState.VISITING
     yield putResolve(updateTreeAction())
-    yield delay(250)
+    yield delay(yield select(getExecutionSpeedFromState))
 
     curNode.state = NodeState.VISITED
     yield putResolve(updateTreeAction())
-    yield delay(250)
+    yield delay(yield select(getExecutionSpeedFromState))
 }
 
 function* levelOrderTraversalSaga() {
     try {
-        const rootNode = yield select(getRootNodeFromState)
+        const levelOrderTask = yield fork(levelOrderTraversalSagaHelper)
 
-        let queue: NodeModel[] = []
-        queue.push(rootNode)
+        yield take(resetNodesAction)
 
-        while (queue.length > 0) {
-            let levelSize = queue.length
-
-            while (levelSize > 0) {
-                let curNode: NodeModel = queue.shift() as NodeModel
-                curNode.state = NodeState.VISITING
-                yield putResolve(updateTreeAction())
-                yield delay(250)
-                curNode.state = NodeState.VISITED
-
-                if (curNode!.leftChild) queue.push(curNode!.leftChild)
-                if (curNode!.rightChild) queue.push(curNode!.rightChild)
-
-                levelSize--
-            }
-        }
-        yield putResolve(updateTreeAction())
+        yield cancel(levelOrderTask)
     } catch (e) {
-        console.error('update tree saga: something went wrong!', e)
+        console.error('level order traversal saga: something went wrong!', e)
     }
+}
+function* levelOrderTraversalSagaHelper() {
+    const rootNode = yield select(getRootNodeFromState)
+
+    let queue: NodeModel[] = []
+    queue.push(rootNode)
+
+    while (queue.length > 0) {
+        let levelSize = queue.length
+
+        while (levelSize > 0) {
+            let curNode: NodeModel = queue.shift() as NodeModel
+            curNode.state = NodeState.VISITING
+            yield putResolve(updateTreeAction())
+            yield delay(yield select(getExecutionSpeedFromState))
+            curNode.state = NodeState.VISITED
+
+            if (curNode!.leftChild) queue.push(curNode!.leftChild)
+            if (curNode!.rightChild) queue.push(curNode!.rightChild)
+
+            levelSize--
+        }
+    }
+    yield putResolve(updateTreeAction())
 }
 
 function* resetNodesSaga() {

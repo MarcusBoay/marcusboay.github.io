@@ -5,12 +5,14 @@ import { getType } from 'typesafe-actions'
 import {
     putTreeAction,
     putRootNodeAction,
+    updateExecutionSpeedAction,
 } from '../actions/treeVisualizerActions'
 import { RootState } from '.'
 
 export type TreeVisualizerState = {
     rootNode: NodeModel
     tree: Array<NodeModel[]>
+    executionSpeed: number
 }
 export const treeVisualizerReducer = combineReducers<
     TreeVisualizerState,
@@ -32,6 +34,14 @@ export const treeVisualizerReducer = combineReducers<
                 return state
         }
     },
+    executionSpeed: (state: number = 50, action) => {
+        switch (action.type) {
+            case getType(updateExecutionSpeedAction):
+                return action.payload
+            default:
+                return state
+        }
+    },
 })
 
 export const getRootNodeFromState = (state: RootState): NodeModel => {
@@ -40,4 +50,8 @@ export const getRootNodeFromState = (state: RootState): NodeModel => {
 
 export const getTreeFromState = (state: RootState): Array<NodeModel[]> => {
     return state.treeVisualizer.tree
+}
+
+export const getExecutionSpeedFromState = (state: RootState): number => {
+    return state.treeVisualizer.executionSpeed
 }
