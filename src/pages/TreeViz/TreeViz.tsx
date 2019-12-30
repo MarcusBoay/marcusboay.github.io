@@ -31,7 +31,7 @@ import { connect } from 'react-redux'
  * TODO:
  * - generate trees :
  * 	- dropdown (binary tree, complete, incomplete, depth, how many nodes)
- * 	- user clicking near node
+ * 	- user clicking near node (adding, deleting, editing)
  *
  * - user can pick what algo to run from dropdown (v1, no interaction with code, BFS, DFS, pre-order, post-order, in-order)
  *
@@ -42,6 +42,8 @@ import { connect } from 'react-redux'
  * - dropdown of algo
  *
  * - visual sexiness
+ *
+ * -
  *
  * v2:
  * - if nodes have no children, make them visuallly closer
