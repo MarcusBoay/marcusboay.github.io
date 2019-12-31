@@ -1,7 +1,19 @@
 import React from 'react'
-import { StyledNotFoundTitle } from './StyledNotFound'
+import {
+    StyledNotFoundTitle,
+    StyledNotFoundPageLayout,
+    StyledNotFoundInner,
+} from './StyledNotFound'
 
 const NotFound: React.FunctionComponent<{}> = () => {
-    return <StyledNotFoundTitle>you have found nothing</StyledNotFoundTitle>
+    return (
+        <StyledNotFoundPageLayout>
+            <StyledNotFoundInner>
+                <StyledNotFoundTitle>
+                    you have found nothing
+                </StyledNotFoundTitle>
+            </StyledNotFoundInner>
+        </StyledNotFoundPageLayout>
+    )
 }
 export default NotFound
