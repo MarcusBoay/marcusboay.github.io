@@ -234,6 +234,8 @@ function* resetNodesSagaHelper(curNode: NodeModel): any {
 
 function* generateTreeSaga() {
     try {
+        yield put(resetNodesAction())
+
         const height = yield select(getGenHeightFromState)
         const isBST = yield select(getGenIsBSTreeFromState)
         const isComplete = yield select(getGenIsCompleteTreefromState)
@@ -259,6 +261,8 @@ function* generateTreeSaga() {
                 let minVal = cur[1]
                 let maxVal = cur[2]
 
+
+                // here is where the isComplete and isFull logic should come into play
                 curNode.leftChild = generateNode(valueType, isBST, minVal, curNode.value, count)
                 count++
                 queue.push([curNode.leftChild, minVal, curNode.value])
@@ -270,7 +274,6 @@ function* generateTreeSaga() {
                 curLevelNodes--
             }
             curHeight++
-
         }
 
         yield put(createRootNodeAction(rootNode))

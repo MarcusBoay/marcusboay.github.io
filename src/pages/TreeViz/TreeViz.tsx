@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, Fragment } from 'react'
 import {
     StyledPageLayout,
     StyledPageSideTree,
@@ -285,9 +285,8 @@ const Tree: React.FunctionComponent<TreeProps> = ({ tree, speed }) => {
                     const rightBranchYOffset = radius * Math.cos(thetaRight)
 
                     return (
-                        <>
+                        <Fragment key={node.id}>
                             <Node
-                                key={String(level) + '.' + String(node.value)}
                                 x={x}
                                 y={y}
                                 level={level}
@@ -311,7 +310,7 @@ const Tree: React.FunctionComponent<TreeProps> = ({ tree, speed }) => {
                                     y2={yChild}
                                 />
                             )}
-                        </>
+                        </Fragment>
                     )
                 })
             )}
