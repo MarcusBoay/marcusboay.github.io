@@ -60,7 +60,7 @@ export const treeVisualizerReducer = combineReducers<
                 return state
         }
     },
-    genIsBSTree: (state: boolean = false, action) => {
+    genIsBSTree: (state: boolean = true, action) => {
         switch (action.type) {
             case getType(putGenIsBSTreeAction):
                 return action.payload
@@ -85,7 +85,7 @@ export const treeVisualizerReducer = combineReducers<
         }
     },
     genNodeValueType: (
-        state: GenNodeValueType = GenNodeValueType.STANDARD,
+        state: GenNodeValueType = GenNodeValueType.EMOJI,
         action
     ) => {
         switch (action.type) {

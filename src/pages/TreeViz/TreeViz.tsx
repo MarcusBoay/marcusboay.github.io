@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     StyledPageLayout,
     StyledPageSideTree,
@@ -13,13 +13,16 @@ import {
     StyledGenerateTreeDetailsContainer,
 } from './StyledTreeViz'
 import { RootState } from '../../redux/reducers'
-import { NodeModel } from '../../models/TreeViz'
+import { NodeModel, GenNodeValueType } from '../../models/TreeViz'
 import { Dispatch, bindActionCreators } from 'redux'
 import { RootAction } from '../../redux/actions'
 import {
     getTreeFromState,
     getRootNodeFromState,
     getExecutionSpeedFromState,
+    getGenHeightFromState,
+    getGenIsBSTreeFromState,
+    getGenNodeValueTypeFromState,
 } from '../../redux/reducers/treeVisualizerReducer'
 import {
     createRootNodeAction,
@@ -30,6 +33,9 @@ import {
     levelOrderTraversalAction,
     updateExecutionSpeedAction,
     generateTreeAction,
+    putGenHeightAction,
+    putGenIsBSTreeAction,
+    putGenNodeValueTypeAction,
 } from '../../redux/actions/treeVisualizerActions'
 import { connect } from 'react-redux'
 
@@ -64,6 +70,9 @@ interface TreeVizProps {
     rootNode: NodeModel
     tree: Array<NodeModel[]>
     executionSpeed: number
+    genHeight: number
+    genIsBSTree: boolean
+    genNodeValueType: GenNodeValueType
     createRootNode: (node: NodeModel) => void
     resetNodes: () => void
     preOrderTraversal: () => void
@@ -72,12 +81,18 @@ interface TreeVizProps {
     levelOrderTraversal: () => void
     updateExecutionSpeed: (speed: number) => void
     generateTree: () => void
+    putGenTreeHeight: (genHeight: number) => void
+    putGenIsBSTree: (genIsBST: boolean) => void
+    putGenNodeValueType: (genNodeValueType: GenNodeValueType) => void
 }
 
 const mapStateToProps = (state: RootState) => ({
     rootNode: getRootNodeFromState(state),
     tree: getTreeFromState(state),
     executionSpeed: getExecutionSpeedFromState(state),
+    genHeight: getGenHeightFromState(state),
+    genIsBSTree: getGenIsBSTreeFromState(state),
+    genNodeValueType: getGenNodeValueTypeFromState(state),
 })
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
     bindActionCreators(
@@ -90,6 +105,9 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
             levelOrderTraversal: levelOrderTraversalAction,
             updateExecutionSpeed: updateExecutionSpeedAction,
             generateTree: generateTreeAction,
+            putGenTreeHeight: putGenHeightAction,
+            putGenIsBSTree: putGenIsBSTreeAction,
+            putGenNodeValueType: putGenNodeValueTypeAction,
         },
         dispatch
     )
@@ -106,9 +124,15 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
     levelOrderTraversal,
     updateExecutionSpeed,
     generateTree,
+    putGenTreeHeight,
+    putGenIsBSTree,
+    putGenNodeValueType,
+    genHeight,
+    genIsBSTree,
+    genNodeValueType,
 }) => {
     useEffect(() => {
-        // test to see if nodes render correctly
+        // initial set of nodes
         let curNode = rootNode
         rootNode.leftChild = new NodeModel(1)
         rootNode.rightChild = new NodeModel(2)
@@ -189,18 +213,21 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
                 <StyledGenerateTreePartContainer>
                     <StyledGenerateTreeDetailsContainer>
                         <div>
+                            <input
+                                type="number"
+                                min="1"
+                                max="5"
+                                value={genHeight}
+                                onChange={event => {
+                                    putGenTreeHeight(Number(event.target.value))
+                                }}
+                            />
                             <span>height</span>
-                            <span>4</span>
                         </div>
                         <div>
-                            is binary tree (left child is smaller than current
-                            is smaller than right child)? no
+                            is BST (left child is smaller than current is
+                            smaller than right child)? no
                         </div>
-                        <div>
-                            is complete (all levels are completely filled except
-                            last level)? no
-                        </div>
-                        <div>is full (every node has 0 or 2 children)? no</div>
                         <div>node values: standard, randomized, 🐶</div>
                     </StyledGenerateTreeDetailsContainer>
                     <StyledGenerateTreeButtonContainer>

@@ -242,20 +242,18 @@ function* generateTreeSaga() {
 
         let maxNodes = 0
         for (let h = 0; h < height; h++) {
-            maxNodes += 2 ** (h - 1)
+            maxNodes += 2 ** h
         }
 
         let queue = [] as Array<[NodeModel, number, number]>
         let rootNode = generateNode(valueType, isBST, 0, maxNodes, 0)
-        queue.push([rootNode, 0, 0])
-        let curHeight = 0
+        queue.push([rootNode, 0, maxNodes])
+        let curHeight = 1
         let count = 1
 
         while (curHeight < height) {
-            curHeight++
-
             let curLevelNodes = queue.length
-            while (curLevelNodes > 0 && curHeight <= height) {
+            while (curLevelNodes > 0) {
                 let cur = queue.shift() as [NodeModel, number, number]
                 let curNode = cur[0] as NodeModel
                 let minVal = cur[1]
@@ -271,6 +269,8 @@ function* generateTreeSaga() {
 
                 curLevelNodes--
             }
+            curHeight++
+
         }
 
         yield put(createRootNodeAction(rootNode))
@@ -288,7 +288,7 @@ let generateNode = (
     switch (valueType) {
         case GenNodeValueType.STANDARD:
             if (isBST) {
-                return new NodeModel(Math.floor(Math.random() * (maxVal + 1 - minVal) + minVal))
+                return new NodeModel(Math.floor((minVal + maxVal) / 2))
             }
             return new NodeModel(count)
         case GenNodeValueType.RANDOM:
