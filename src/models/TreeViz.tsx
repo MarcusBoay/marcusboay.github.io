@@ -10,17 +10,23 @@ export enum NodeState {
 export class NodeModel {
     // data
     id: string
-    value: number
+    value: any
     leftChild?: NodeModel
     rightChild?: NodeModel
     // view
     state: NodeState
 
-    constructor(val: number) {
+    constructor(val: any) {
         this.id = uuidv1()
         this.value = val
         this.leftChild = undefined
         this.rightChild = undefined
         this.state = NodeState.INIT
     }
+}
+
+export enum GenNodeValueType {
+    STANDARD,
+    RANDOM,
+    EMOJI,
 }

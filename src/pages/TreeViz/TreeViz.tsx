@@ -6,6 +6,11 @@ import {
     StyledNodeCircle,
     StyledNodeValue,
     StyledNodeBranch,
+    StyledButton,
+    StyledGenerateTreePartContainer,
+    StyledCodePartContainer,
+    StyledGenerateTreeButtonContainer,
+    StyledGenerateTreeDetailsContainer,
 } from './StyledTreeViz'
 import { RootState } from '../../redux/reducers'
 import { NodeModel } from '../../models/TreeViz'
@@ -24,6 +29,7 @@ import {
     postOrderTraversalAction,
     levelOrderTraversalAction,
     updateExecutionSpeedAction,
+    generateTreeAction,
 } from '../../redux/actions/treeVisualizerActions'
 import { connect } from 'react-redux'
 
@@ -31,7 +37,6 @@ import { connect } from 'react-redux'
  * TODO:
  * - generate trees :
  * 	- dropdown (binary tree, complete, incomplete, depth, how many nodes)
- * 	- user clicking near node (adding, deleting, editing)
  *
  * - user can pick what algo to run from dropdown (v1, no interaction with code, BFS, DFS, pre-order, post-order, in-order)
  *
@@ -49,6 +54,10 @@ import { connect } from 'react-redux'
  * - if nodes have no children, make them visuallly closer
  * - make radius of nodes smaller if tree is out of bounds
  * - zoom on canvas
+ * - sliding window (to minimize the code side)?
+ * - pause (research)
+ * - undo
+ * - play from left of state from undo
  */
 
 interface TreeVizProps {
@@ -62,6 +71,7 @@ interface TreeVizProps {
     postOrderTraversal: () => void
     levelOrderTraversal: () => void
     updateExecutionSpeed: (speed: number) => void
+    generateTree: () => void
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -79,6 +89,7 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
             postOrderTraversal: postOrderTraversalAction,
             levelOrderTraversal: levelOrderTraversalAction,
             updateExecutionSpeed: updateExecutionSpeedAction,
+            generateTree: generateTreeAction,
         },
         dispatch
     )
@@ -94,6 +105,7 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
     postOrderTraversal,
     levelOrderTraversal,
     updateExecutionSpeed,
+    generateTree,
 }) => {
     useEffect(() => {
         // test to see if nodes render correctly
@@ -124,62 +136,84 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
                 <Tree tree={tree} speed={executionSpeed} />
             </StyledPageSideTree>
             <StyledPageSideCode>
-                <p>this is where the code should live</p>
-                <button
-                    onClick={() => {
-                        preOrderTraversal()
-                    }}
-                >
-                    pre order
-                </button>
-                <button
-                    onClick={() => {
-                        inOrderTraversal()
-                    }}
-                >
-                    in order
-                </button>
-                <button
-                    onClick={() => {
-                        postOrderTraversal()
-                    }}
-                >
-                    post order
-                </button>
-                <button
-                    onClick={() => {
-                        levelOrderTraversal()
-                    }}
-                >
-                    level order
-                </button>
-                <button
-                    onClick={() => {
-                        resetNodes()
-                    }}
-                >
-                    reset
-                </button>
-                <div>
-                    <input
-                        type="range"
-                        min="50"
-                        max="3000"
-                        value={executionSpeed}
-                        onChange={event => {
-                            updateExecutionSpeed(Number(event.target.value))
+                <StyledCodePartContainer>
+                    <p>this is where the code should live</p>
+                    <StyledButton
+                        onClick={() => {
+                            preOrderTraversal()
                         }}
-                    />
-                    <span>Speed</span>
-                </div>
+                    >
+                        pre order
+                    </StyledButton>
+                    <button
+                        onClick={() => {
+                            inOrderTraversal()
+                        }}
+                    >
+                        in order
+                    </button>
+                    <button
+                        onClick={() => {
+                            postOrderTraversal()
+                        }}
+                    >
+                        post order
+                    </button>
+                    <button
+                        onClick={() => {
+                            levelOrderTraversal()
+                        }}
+                    >
+                        level order
+                    </button>
+                    <button
+                        onClick={() => {
+                            resetNodes()
+                        }}
+                    >
+                        reset
+                    </button>
+                    <div>
+                        <input
+                            type="range"
+                            min="50"
+                            max="3000"
+                            value={executionSpeed}
+                            onChange={event => {
+                                updateExecutionSpeed(Number(event.target.value))
+                            }}
+                        />
+                        <span>Speed</span>
+                    </div>
+                </StyledCodePartContainer>
+                <StyledGenerateTreePartContainer>
+                    <StyledGenerateTreeDetailsContainer>
+                        <div>
+                            <span>height</span>
+                            <span>4</span>
+                        </div>
+                        <div>
+                            is binary tree (left child is smaller than current
+                            is smaller than right child)? no
+                        </div>
+                        <div>
+                            is complete (all levels are completely filled except
+                            last level)? no
+                        </div>
+                        <div>is full (every node has 0 or 2 children)? no</div>
+                        <div>node values: standard, randomized, 🐶</div>
+                    </StyledGenerateTreeDetailsContainer>
+                    <StyledGenerateTreeButtonContainer>
+                        <StyledButton onClick={generateTree}>
+                            Generate
+                        </StyledButton>
+                    </StyledGenerateTreeButtonContainer>
+                </StyledGenerateTreePartContainer>
             </StyledPageSideCode>
         </StyledPageLayout>
     )
 }
-const ConnectTreeViz = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(TreeViz)
+const ConnectTreeViz = connect(mapStateToProps, mapDispatchToProps)(TreeViz)
 export default ConnectTreeViz
 
 interface TreeProps {
