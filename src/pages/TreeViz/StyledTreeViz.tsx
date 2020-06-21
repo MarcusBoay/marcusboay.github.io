@@ -35,9 +35,7 @@ export const StyledGenerateTreePartContainer = styled.div`
     align-self: flex-end;
 `
 
-export const StyledGenerateTreeDetailsContainer = styled.div`
-
-`
+export const StyledGenerateTreeDetailsContainer = styled.div``
 
 export const StyledGenerateTreeButtonContainer = styled.div`
     margin-left: auto;
@@ -74,12 +72,12 @@ export const StyledNodeBranch = styled.line`
 
 export const StyledButton = styled.button`
     background: transparent;
-    color: #EAEAEA;
+    color: #eaeaea;
     font-size: 1em;
     font-family: 'Courier New', Courier, monospace;
     margin: 1em;
     padding: 0.25em 1em;
-    border: 2px solid #EAEAEA;
+    border: 2px solid #eaeaea;
     border-radius: 3px;
     transition: 0.15s ease-in-out;
 
@@ -87,4 +85,9 @@ export const StyledButton = styled.button`
         background: #969696;
         cursor: pointer;
     }
+`
+
+export const StyledRangedInput = styled.input`
+    min-width: 300px;
+    margin: 16px;
 `

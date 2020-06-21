@@ -11,6 +11,7 @@ import {
     StyledCodePartContainer,
     StyledGenerateTreeButtonContainer,
     StyledGenerateTreeDetailsContainer,
+    StyledRangedInput,
 } from './StyledTreeViz'
 import { RootState } from '../../redux/reducers'
 import { NodeModel, GenNodeValueType } from '../../models/TreeViz'
@@ -161,7 +162,7 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
             </StyledPageSideTree>
             <StyledPageSideCode>
                 <StyledCodePartContainer>
-                    <p>this is where the code should live</p>
+                    {/* <p>this is where the code should live</p> */}
                     <StyledButton
                         onClick={() => {
                             preOrderTraversal()
@@ -169,66 +170,91 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
                     >
                         pre order
                     </StyledButton>
-                    <button
+                    <StyledButton
                         onClick={() => {
                             inOrderTraversal()
                         }}
                     >
                         in order
-                    </button>
-                    <button
+                    </StyledButton>
+                    <StyledButton
                         onClick={() => {
                             postOrderTraversal()
                         }}
                     >
                         post order
-                    </button>
-                    <button
+                    </StyledButton>
+                    <StyledButton
                         onClick={() => {
                             levelOrderTraversal()
                         }}
                     >
                         level order
-                    </button>
-                    <button
+                    </StyledButton>
+                    <StyledButton
                         onClick={() => {
                             resetNodes()
                         }}
                     >
                         reset
-                    </button>
+                    </StyledButton>
                     <div>
-                        <input
+                        <StyledRangedInput
                             type="range"
+                            list="speed-tickmarks"
                             min="50"
-                            max="3000"
+                            max="1000"
                             value={executionSpeed}
                             onChange={event => {
                                 updateExecutionSpeed(Number(event.target.value))
                             }}
                         />
+                        <datalist id="speed-tickmarks">
+                            <option value="50" label="50ms"></option>
+                            <option value="100"></option>
+                            <option value="150"></option>
+                            <option value="200"></option>
+                            <option value="250" label="250ms"></option>
+                            <option value="300"></option>
+                            <option value="400"></option>
+                            <option value="500" label="500ms"></option>
+                            <option value="600"></option>
+                            <option value="700"></option>
+                            <option value="800"></option>
+                            <option value="900"></option>
+                            <option value="1000" label="1000ms"></option>
+                        </datalist>
                         <span>Speed</span>
                     </div>
                 </StyledCodePartContainer>
                 <StyledGenerateTreePartContainer>
                     <StyledGenerateTreeDetailsContainer>
                         <div>
-                            <input
-                                type="number"
+                            <StyledRangedInput
+                                type="range"
+                                list="height-tickmarks"
                                 min="1"
                                 max="5"
+                                step="1"
                                 value={genHeight}
                                 onChange={event => {
                                     putGenTreeHeight(Number(event.target.value))
                                 }}
                             />
+                            <datalist id="height-tickmarks">
+                                <option value="1" label="1"></option>
+                                <option value="2"></option>
+                                <option value="3"></option>
+                                <option value="4"></option>
+                                <option value="5" label="5"></option>
+                            </datalist>
                             <span>height</span>
                         </div>
-                        <div>
+                        {/* <div>
                             is BST (left child is smaller than current is
                             smaller than right child)? no
                         </div>
-                        <div>node values: standard, randomized, 🐶</div>
+                        <div>node values: standard, randomized, 🐶</div> */}
                     </StyledGenerateTreeDetailsContainer>
                     <StyledGenerateTreeButtonContainer>
                         <StyledButton onClick={generateTree}>
@@ -240,7 +266,10 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
         </StyledPageLayout>
     )
 }
-const ConnectTreeViz = connect(mapStateToProps, mapDispatchToProps)(TreeViz)
+const ConnectTreeViz = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TreeViz)
 export default ConnectTreeViz
 
 interface TreeProps {

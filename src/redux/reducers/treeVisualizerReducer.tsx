@@ -85,7 +85,7 @@ export const treeVisualizerReducer = combineReducers<
         }
     },
     genNodeValueType: (
-        state: GenNodeValueType = GenNodeValueType.EMOJI,
+        state: GenNodeValueType = GenNodeValueType.STANDARD,
         action
     ) => {
         switch (action.type) {
