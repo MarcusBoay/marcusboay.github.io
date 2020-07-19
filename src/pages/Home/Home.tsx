@@ -12,12 +12,12 @@ import {
     StyledHomeSectionLinksContainer,
     StyledHomeSectionLinkContainer,
     StyledHomeSubTitle,
-    StyledHomeSubSubTitle,
     StyledHomeSectionRoleAndYear,
     StyledHomeSectionRole,
     StyledHomeSectionYear,
     StyledHomeSecondSectionTextContainer,
     StyledHomeLink,
+    StyledHomeHeroContainer,
 } from './StyledHome'
 import { SectionInfoModel, SectionLinkModel } from '../../models/Home'
 import kontrolImage from '../../images/kontrol.png'
@@ -149,11 +149,13 @@ const Home: React.FunctionComponent<{}> = () => {
         <StyledHomePageLayout>
             <StyledHomeFirstSection>
                 <StyledHomeFirstSectionTextContainer>
-                    <StyledHomeTitle>{firstSectionText}</StyledHomeTitle>
-                    <StyledHomeSubTitle>{secondSectionText}</StyledHomeSubTitle>
-                    <StyledHomeSubSubTitle>
-                        {thirdSectionText}
-                    </StyledHomeSubSubTitle>
+                    <StyledHomeHeroContainer>
+                        <StyledHomeTitle>{firstSectionText}</StyledHomeTitle>
+                        <StyledHomeSubTitle>
+                            {secondSectionText}
+                        </StyledHomeSubTitle>
+                    </StyledHomeHeroContainer>
+                    <StyledHomeSubTitle>{thirdSectionText}</StyledHomeSubTitle>
                 </StyledHomeFirstSectionTextContainer>
                 <StyledHomeSecondSectionTextContainer>
                     {personLinks.map(link => (

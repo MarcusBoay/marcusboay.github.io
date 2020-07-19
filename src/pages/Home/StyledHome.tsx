@@ -18,17 +18,16 @@ export const StyledHomeFirstSectionTextContainer = styled.div`
     text-align: center;
 `
 
+export const StyledHomeHeroContainer = styled.div`
+    margin-bottom: 32px;
+`
+
 export const StyledHomeTitle = styled.h1`
     margin-bottom: 4px;
 `
 
-export const StyledHomeSubTitle = styled.h2`
+export const StyledHomeSubTitle = styled.h3`
     margin-top: 4px;
-    color: #b9b9b9;
-`
-
-export const StyledHomeSubSubTitle = styled.h3`
-    margin-top: 42px;
     color: #b9b9b9;
 `
 
