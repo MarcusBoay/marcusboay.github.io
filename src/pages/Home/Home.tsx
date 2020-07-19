@@ -11,6 +11,8 @@ import {
     StyledHomeSectionLink,
     StyledHomeSectionLinksContainer,
     StyledHomeSectionLinkContainer,
+    StyledHomeSubTitle,
+    StyledHomeSubSubTitle,
 } from './StyledHome'
 import { SectionInfoModel } from '../../models/Home'
 import kontrolImage from '../../images/kontrol.png'
@@ -40,22 +42,46 @@ const projects = [
 const Home: React.FunctionComponent<{}> = () => {
     const [firstSectionText, setFirstSectionText] = useState<string>('')
     const [secondSectionText, setSecondSectionText] = useState<string>('')
+    const [thirdSectionText, setThirdSectionText] = useState<string>('')
     let firstSectionTextPointer = 0
     let secondSectionTextPointer = 0
-    const firstSectionTextFull = "Hi. I'm Marcus Boay."
-    const secondSectionTextFull =
-        'Delivering quality code with excellent user experience.'
+    let thirdSectionTextPointer = 0
+    const firstSectionTextFull = 'Marcus Boay'
+    const secondSectionTextFull = 'Software Engineer'
+    const thirdSectionTextFull =
+        'Delivering quality code with excellent user experience'
 
     // title text animation
     useEffect(() => {
         const interval = setInterval(() => {
-            setFirstSectionText(
-                firstSectionText =>
-                    firstSectionText +
-                    firstSectionTextFull[firstSectionTextPointer]
-            )
-            firstSectionTextPointer++
-            if (firstSectionTextPointer >= firstSectionTextFull.length) {
+            if (firstSectionTextPointer < firstSectionTextFull.length) {
+                setFirstSectionText(
+                    firstSectionText =>
+                        firstSectionText +
+                        firstSectionTextFull[firstSectionTextPointer]
+                )
+                firstSectionTextPointer++
+            } else if (
+                firstSectionTextPointer >= firstSectionTextFull.length &&
+                secondSectionTextPointer < secondSectionTextFull.length
+            ) {
+                setSecondSectionText(
+                    secondSectionText =>
+                        secondSectionText +
+                        secondSectionTextFull[secondSectionTextPointer]
+                )
+                secondSectionTextPointer++
+            } else if (
+                secondSectionTextPointer >= secondSectionTextFull.length &&
+                thirdSectionTextPointer < thirdSectionTextFull.length
+            ) {
+                setThirdSectionText(
+                    thirdSectionText =>
+                        thirdSectionText +
+                        thirdSectionTextFull[thirdSectionTextPointer]
+                )
+                thirdSectionTextPointer++
+            } else {
                 clearInterval(interval)
             }
         }, 35)
@@ -70,6 +96,10 @@ const Home: React.FunctionComponent<{}> = () => {
             <StyledHomeFirstSection>
                 <StyledHomeFirstSectionTextContainer>
                     <StyledHomeTitle>{firstSectionText}</StyledHomeTitle>
+                    <StyledHomeSubTitle>{secondSectionText}</StyledHomeSubTitle>
+                    <StyledHomeSubSubTitle>
+                        {thirdSectionText}
+                    </StyledHomeSubSubTitle>
                 </StyledHomeFirstSectionTextContainer>
             </StyledHomeFirstSection>
             {projects.map(project => (
