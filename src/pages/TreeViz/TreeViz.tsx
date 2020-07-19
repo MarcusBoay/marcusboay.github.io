@@ -12,6 +12,7 @@ import {
     StyledGenerateTreeButtonContainer,
     StyledGenerateTreeDetailsContainer,
     StyledRangedInput,
+    StyledPageLinkText,
 } from './StyledTreeViz'
 import { RootState } from '../../redux/reducers'
 import { NodeModel, GenNodeValueType } from '../../models/TreeViz'
@@ -235,6 +236,16 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
                         </StyledButton>
                     </StyledGenerateTreeButtonContainer>
                 </StyledGenerateTreePartContainer>
+                <StyledPageLinkText>
+                    View source code on{' '}
+                    <a
+                        href={
+                            'https://github.com/MarcusBoay/marcusboay.github.io/tree/dev/src/pages/TreeViz'
+                        }
+                    >
+                        GitHub
+                    </a>
+                </StyledPageLinkText>
             </StyledPageSideCode>
         </StyledPageLayout>
     )

@@ -91,3 +91,20 @@ export const StyledRangedInput = styled.input`
     min-width: 300px;
     margin: 16px;
 `
+
+export const StyledPageLinkText = styled.p`
+    font-size: 20px;
+    color: white;
+
+    a {
+        font-size: 20px;
+        color: white;
+        text-decoration: none;
+
+        :hover {
+            font-style: italic;
+            color: white;
+            cursor: pointer;
+        }
+    }
+`
