@@ -40,33 +40,6 @@ import {
 } from '../../redux/actions/treeVisualizerActions'
 import { connect } from 'react-redux'
 
-/**
- * TODO:
- * - generate trees :
- * 	- dropdown (binary tree, complete, incomplete, depth, how many nodes)
- *
- * - user can pick what algo to run from dropdown (v1, no interaction with code, BFS, DFS, pre-order, post-order, in-order)
- *
- * - highlight line of code that is being executed and show it on tree
- *
- * - adding nodes, updating nodes, deleting nodes (by user)
- *
- * - dropdown of algo
- *
- * - visual sexiness
- *
- * -
- *
- * v2:
- * - if nodes have no children, make them visuallly closer
- * - make radius of nodes smaller if tree is out of bounds
- * - zoom on canvas
- * - sliding window (to minimize the code side)?
- * - pause (research)
- * - undo
- * - play from left of state from undo
- */
-
 interface TreeVizProps {
     rootNode: NodeModel
     tree: Array<NodeModel[]>
@@ -266,10 +239,7 @@ const TreeViz: React.FunctionComponent<TreeVizProps> = ({
         </StyledPageLayout>
     )
 }
-const ConnectTreeViz = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(TreeViz)
+const ConnectTreeViz = connect(mapStateToProps, mapDispatchToProps)(TreeViz)
 export default ConnectTreeViz
 
 interface TreeProps {
