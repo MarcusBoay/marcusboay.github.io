@@ -16,12 +16,28 @@ import {
     StyledHomeSectionRoleAndYear,
     StyledHomeSectionRole,
     StyledHomeSectionYear,
+    StyledHomeSecondSectionTextContainer,
+    StyledHomeLink,
 } from './StyledHome'
-import { SectionInfoModel } from '../../models/Home'
+import { SectionInfoModel, SectionLinkModel } from '../../models/Home'
 import kontrolImage from '../../images/kontrol.png'
 import treeVizImage from '../../images/tree-viz.png'
 import hackedImage from '../../images/hacked.jpg'
 
+const personLinks = [
+    {
+        title: 'LinkedIn',
+        url: 'https://ca.linkedin.com/in/marcus-boay',
+    },
+    {
+        title: 'GitHub',
+        url: 'https://github.com/MarcusBoay',
+    },
+    {
+        title: 'Twitter',
+        url: 'https://twitter.com/BoayMarcus',
+    },
+] as Array<SectionLinkModel>
 const projects = [
     {
         title: 'Kontrol',
@@ -78,6 +94,7 @@ const Home: React.FunctionComponent<{}> = () => {
     const [firstSectionText, setFirstSectionText] = useState<string>('')
     const [secondSectionText, setSecondSectionText] = useState<string>('')
     const [thirdSectionText, setThirdSectionText] = useState<string>('')
+    const [showLinks, setShowLinks] = useState<boolean>(false)
     let firstSectionTextPointer = 0
     let secondSectionTextPointer = 0
     let thirdSectionTextPointer = 0
@@ -118,11 +135,13 @@ const Home: React.FunctionComponent<{}> = () => {
                 thirdSectionTextPointer++
             } else {
                 clearInterval(interval)
+                setShowLinks(true)
             }
         }, 35)
 
         return () => {
             clearInterval(interval)
+            setShowLinks(true)
         }
     }, [])
 
@@ -136,6 +155,13 @@ const Home: React.FunctionComponent<{}> = () => {
                         {thirdSectionText}
                     </StyledHomeSubSubTitle>
                 </StyledHomeFirstSectionTextContainer>
+                <StyledHomeSecondSectionTextContainer>
+                    {personLinks.map(link => (
+                        <StyledHomeLink href={link.url} showLink={showLinks}>
+                            {link.title}
+                        </StyledHomeLink>
+                    ))}
+                </StyledHomeSecondSectionTextContainer>
             </StyledHomeFirstSection>
             {projects
                 .sort((p1, p2) => (p1.year < p2.year ? 1 : -1))

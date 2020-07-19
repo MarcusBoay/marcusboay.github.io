@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const StyledHomePageLayout = styled.div`
     background: #1f1f23;
@@ -30,6 +30,29 @@ export const StyledHomeSubTitle = styled.h2`
 export const StyledHomeSubSubTitle = styled.h3`
     margin-top: 42px;
     color: #b9b9b9;
+`
+
+export const StyledHomeSecondSectionTextContainer = styled.div`
+    text-align: right;
+    display: inline;
+    padding-bottom: 0.5em;
+`
+
+export const StyledHomeLink = styled.a<{ showLink?: boolean }>`
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    margin-left: 1em;
+    margin-right: 1em;
+    opacity: ${props => (props.showLink ? 1 : 0)};
+    transition: opacity 0.35s;
+    pointer-events: ${props => (props.showLink ? `all` : `none`)};
+
+    :hover {
+        font-style: italic;
+        color: white;
+        cursor: pointer;
+    }
 `
 
 const sectionMargin = 24

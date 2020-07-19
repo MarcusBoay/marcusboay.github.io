@@ -3,7 +3,7 @@ export class SectionInfoModel {
     year: number
     role: string
     description: Array<string>
-    links: Array<SectionInfoLinkModel>
+    links: Array<SectionLinkModel>
     image: string
     imageAlt: string
 
@@ -12,7 +12,7 @@ export class SectionInfoModel {
         year: number,
         role: string,
         description: Array<string>,
-        links: Array<SectionInfoLinkModel>,
+        links: Array<SectionLinkModel>,
         image: string,
         imageAlt: string
     ) {
@@ -26,7 +26,7 @@ export class SectionInfoModel {
     }
 }
 
-export class SectionInfoLinkModel {
+export class SectionLinkModel {
     title: string
     url: string
 
