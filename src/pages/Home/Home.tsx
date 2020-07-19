@@ -13,25 +13,17 @@ import {
     StyledHomeSectionLinkContainer,
 } from './StyledHome'
 import { SectionInfoModel } from '../../models/Home'
+import kontrolImage from '../../images/kontrol.png'
 
-/**
- * projects to showcase:
- *
- * kontrol,
- * tree viz?,
- * maybe the thing from work????,
- * 379 assignment?,
- * advent of code?????????????,
- * this website???????????????????
- *
- *
- * how to showcase???
- * probably CtCI method...
- */
 const projects = [
     {
         title: 'Kontrol',
-        description: 'Lorem ipsum bacon ipsum',
+        description: [
+            'A twin-stick shooter I made using Unity and C# over 9 months while balancing internship and school work.',
+            "When I was a teenager, I adored old-school bullet hell games such as Gradius and R-Type. I found that these games aren't as popular as they used to be. I decided to set a goal to create such a game which involved self-studying game design, game programming, art and project management. ",
+            'The game has 3 hand-crafted levels with various enemies and bosses.',
+            'Kontrol has been front-paged on both Newgrounds and Kongregate and has garnered over 22,000 plays.',
+        ],
         links: [
             {
                 title: 'GitHub',
@@ -42,12 +34,17 @@ const projects = [
                 url: 'https://www.newgrounds.com/portal/view/704281',
             },
         ],
+        image: kontrolImage,
     },
 ] as Array<SectionInfoModel>
 const Home: React.FunctionComponent<{}> = () => {
     const [firstSectionText, setFirstSectionText] = useState<string>('')
+    const [secondSectionText, setSecondSectionText] = useState<string>('')
     let firstSectionTextPointer = 0
+    let secondSectionTextPointer = 0
     const firstSectionTextFull = "Hi. I'm Marcus Boay."
+    const secondSectionTextFull =
+        'Delivering quality code with excellent user experience.'
 
     // title text animation
     useEffect(() => {
@@ -101,15 +98,16 @@ const Section: React.FunctionComponent<SectionProps> = ({ project }) => {
         <StyledHomeSection>
             <StyledHomeSectionInner>
                 <StyledHomeSectionTitle>{project.title}</StyledHomeSectionTitle>
-                <StyledHomeSectionText>
-                    {project.description}
-                </StyledHomeSectionText>
+                {project.description &&
+                    project.description.map(d => (
+                        <StyledHomeSectionText>{d}</StyledHomeSectionText>
+                    ))}
                 <StyledHomeSectionLinksContainer>
                     {generateLinks()}
                 </StyledHomeSectionLinksContainer>
             </StyledHomeSectionInner>
             <StyledHomeSectionInner right>
-                image goes here
+                <img src={project.image} alt="image for kontrol" />
             </StyledHomeSectionInner>
         </StyledHomeSection>
     )

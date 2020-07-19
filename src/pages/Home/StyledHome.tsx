@@ -20,24 +20,36 @@ export const StyledHomeFirstSectionTextContainer = styled.div`
 
 export const StyledHomeTitle = styled.h1``
 
+const sectionMargin = 24
+
 export const StyledHomeSection = styled.div`
     min-height: 60vh;
-    margin: 24px;
+    margin: ${`${sectionMargin}px`};
     display: flex;
     flex-direction: row;
 `
 
 export const StyledHomeSectionInner = styled.div<{ right?: boolean }>`
     width: ${props => (props.right ? `calc(65% - 24px)` : `calc(35% - 24px)`)};
+    margin-right: ${props => (props.right ? `0px` : `${sectionMargin}px`)};
     display: flex;
     flex-direction: column;
+
+    img {
+        object-fit: cover;
+        max-height: 800px;
+        width: 100%;
+        padding: 0px;
+    }
 `
 
 export const StyledHomeSectionTitle = styled.h2`
     margin-top: 0px;
 `
 
-export const StyledHomeSectionText = styled.p``
+export const StyledHomeSectionText = styled.p`
+    margin-bottom: 1em;
+`
 
 export const StyledHomeSectionLinksContainer = styled.ul`
     align-self: flex-end;
