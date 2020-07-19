@@ -68,8 +68,8 @@ const projects = [
         role: 'Developer',
         description: [
             'Web-based visualizer to show classic tree traversal algorithms.',
-            'As a tech advocate and Computer Science student, I understand and emphatize with other students who struggle with algoritms and data structure. I realize the difficulty of understanding and visualizing them.',
-            'As a result to aid other students, I have created this visualizer that has classic tree traversal algorithms such as pre-order, in-order and post-order.',
+            'As a tech advocate and Computer Science student, I understand and emphatize with other students who struggle with algorithms and data structures. I realize the difficulty in understanding and visualizing them.',
+            'As a result, in order to aid other students, I have created this tree traversal visualizer that has classic tree traversal algorithms such as pre-order, in-order, post-order and level-order.',
         ],
         links: [{ title: 'Website', url: '/#/tree-viz' }],
         image: treeVizImage,
