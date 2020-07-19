@@ -57,6 +57,24 @@ export const StyledHomeSectionInner = styled.div<{ right?: boolean }>`
 
 export const StyledHomeSectionTitle = styled.h2`
     margin-top: 0px;
+    margin-bottom: 0px;
+`
+
+export const StyledHomeSectionRoleAndYear = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-top: 4px;
+    margin-bottom: 16px;
+`
+
+export const StyledHomeSectionRole = styled.h4`
+    margin: 0px;
+    margin-right: auto;
+`
+
+export const StyledHomeSectionYear = styled.h4`
+    margin: 0px;
+    text-align: right;
 `
 
 export const StyledHomeSectionText = styled.p`

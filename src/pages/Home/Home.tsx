@@ -13,13 +13,20 @@ import {
     StyledHomeSectionLinkContainer,
     StyledHomeSubTitle,
     StyledHomeSubSubTitle,
+    StyledHomeSectionRoleAndYear,
+    StyledHomeSectionRole,
+    StyledHomeSectionYear,
 } from './StyledHome'
 import { SectionInfoModel } from '../../models/Home'
 import kontrolImage from '../../images/kontrol.png'
+import treeVizImage from '../../images/tree-viz.png'
+import hackedImage from '../../images/hacked.jpg'
 
 const projects = [
     {
         title: 'Kontrol',
+        year: 2017,
+        role: 'Producer',
         description: [
             'A twin-stick shooter I made using Unity and C# over 9 months while balancing internship and school work.',
             "When I was a teenager, I adored old-school bullet hell games such as Gradius and R-Type. I found that these games aren't as popular as they used to be. I decided to set a goal to create such a game which involved self-studying game design, game programming, art and project management. ",
@@ -37,6 +44,34 @@ const projects = [
             },
         ],
         image: kontrolImage,
+        imageAlt: 'kontrol gameplay image',
+    },
+    {
+        title: 'Tree Visualizer',
+        year: 2019,
+        role: 'Developer',
+        description: [
+            'Web-based visualizer to show classic tree traversal algorithms.',
+            'As a tech advocate and Computer Science student, I understand and emphatize with other students who struggle with algoritms and data structure. I realize the difficulty of understanding and visualizing them.',
+            'As a result to aid other students, I have created this visualizer that has classic tree traversal algorithms such as pre-order, in-order and post-order.',
+        ],
+        links: [{ title: 'Website', url: '/#/tree-viz' }],
+        image: treeVizImage,
+        imageAlt: 'tree visualizer image',
+    },
+    {
+        title: 'HackED',
+        year: 2018,
+        role: 'VP Finance',
+        description: [
+            'As a tech advocate, one of my goals is to get other people interested in our field.',
+            'As such, I was the VP Finance for HackED Beta 2017 and HackED 2018.',
+            'The event gained over 100 student participants as well as a few industry sponsors.',
+            'Check out their website below',
+        ],
+        links: [{ title: 'Website', url: 'https://hacked.compeclub.com' }],
+        image: hackedImage,
+        imageAlt: 'hacked post-event image',
     },
 ] as Array<SectionInfoModel>
 const Home: React.FunctionComponent<{}> = () => {
@@ -102,9 +137,11 @@ const Home: React.FunctionComponent<{}> = () => {
                     </StyledHomeSubSubTitle>
                 </StyledHomeFirstSectionTextContainer>
             </StyledHomeFirstSection>
-            {projects.map(project => (
-                <Section project={project} />
-            ))}
+            {projects
+                .sort((p1, p2) => (p1.year < p2.year ? 1 : -1))
+                .map(project => (
+                    <Section project={project} />
+                ))}
         </StyledHomePageLayout>
     )
 }
@@ -128,6 +165,14 @@ const Section: React.FunctionComponent<SectionProps> = ({ project }) => {
         <StyledHomeSection>
             <StyledHomeSectionInner>
                 <StyledHomeSectionTitle>{project.title}</StyledHomeSectionTitle>
+                <StyledHomeSectionRoleAndYear>
+                    <StyledHomeSectionRole>
+                        {project.role}
+                    </StyledHomeSectionRole>
+                    <StyledHomeSectionYear>
+                        {project.year}
+                    </StyledHomeSectionYear>
+                </StyledHomeSectionRoleAndYear>
                 {project.description &&
                     project.description.map(d => (
                         <StyledHomeSectionText>{d}</StyledHomeSectionText>
@@ -137,7 +182,7 @@ const Section: React.FunctionComponent<SectionProps> = ({ project }) => {
                 </StyledHomeSectionLinksContainer>
             </StyledHomeSectionInner>
             <StyledHomeSectionInner right>
-                <img src={project.image} alt="image for kontrol" />
+                <img src={project.image} alt={project.imageAlt} />
             </StyledHomeSectionInner>
         </StyledHomeSection>
     )

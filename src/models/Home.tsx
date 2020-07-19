@@ -1,19 +1,28 @@
 export class SectionInfoModel {
     title: string
+    year: number
+    role: string
     description: Array<string>
     links: Array<SectionInfoLinkModel>
     image: string
+    imageAlt: string
 
     constructor(
         title: string,
+        year: number,
+        role: string,
         description: Array<string>,
         links: Array<SectionInfoLinkModel>,
-        image: string
+        image: string,
+        imageAlt: string
     ) {
         this.title = title
+        this.year = year
+        this.role = role
         this.description = description
         this.links = links
         this.image = image
+        this.imageAlt = imageAlt
     }
 }
 
