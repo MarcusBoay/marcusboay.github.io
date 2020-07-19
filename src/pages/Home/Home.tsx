@@ -24,6 +24,10 @@ import kontrolImage from '../../images/kontrol.png'
 import treeVizImage from '../../images/tree-viz.png'
 import hackedImage from '../../images/hacked.jpg'
 
+const firstSectionTextFull = 'Marcus Boay'
+const secondSectionTextFull = 'Software Engineer'
+const thirdSectionTextFull =
+    'Crafting quality code with excellent user experience'
 const personLinks = [
     {
         title: 'LinkedIn',
@@ -39,29 +43,6 @@ const personLinks = [
     },
 ] as Array<SectionLinkModel>
 const projects = [
-    {
-        title: 'Kontrol',
-        year: 2017,
-        role: 'Producer',
-        description: [
-            'A twin-stick shooter made using Unity and C# over 9 months while balancing internship and school work.',
-            "When Marcus was a teenager, he adored old-school bullet hell games such as Gradius and R-Type. He found that these games aren't as popular as they used to be. He decided to set a goal to create such a game which involved self-studying game design, game programming, art and project management.",
-            'The game has 3 hand-crafted levels with various enemies and bosses.',
-            'Kontrol has been front-paged on both Newgrounds and Kongregate and has garnered over 22,000 plays.',
-        ],
-        links: [
-            {
-                title: 'GitHub',
-                url: 'https://github.com/MarcusBoay/Kontrol',
-            },
-            {
-                title: 'NewGrounds',
-                url: 'https://www.newgrounds.com/portal/view/704281',
-            },
-        ],
-        image: kontrolImage,
-        imageAlt: 'kontrol gameplay image',
-    },
     {
         title: 'Tree Visualizer',
         year: 2019,
@@ -88,6 +69,29 @@ const projects = [
         image: hackedImage,
         imageAlt: 'hacked post-event image',
     },
+    {
+        title: 'Kontrol',
+        year: 2017,
+        role: 'Producer, Developer, Designer',
+        description: [
+            'A twin-stick shooter made using Unity and C# over 9 months while balancing internship and school work.',
+            "When Marcus was a teenager, he adored old-school bullet hell games such as Gradius and R-Type. He found that these games aren't as popular as they used to be. He decided to set a goal to create such a game which involved self-studying game design, game programming, art and project management.",
+            'The game has 3 hand-crafted levels with various enemies and bosses.',
+            'Kontrol has been front-paged on both Newgrounds and Kongregate and has garnered over 22,000 plays.',
+        ],
+        links: [
+            {
+                title: 'GitHub',
+                url: 'https://github.com/MarcusBoay/Kontrol',
+            },
+            {
+                title: 'NewGrounds',
+                url: 'https://www.newgrounds.com/portal/view/704281',
+            },
+        ],
+        image: kontrolImage,
+        imageAlt: 'kontrol gameplay image',
+    },
 ] as Array<SectionInfoModel>
 const Home: React.FunctionComponent<{}> = () => {
     const [firstSectionText, setFirstSectionText] = useState<string>('')
@@ -97,10 +101,6 @@ const Home: React.FunctionComponent<{}> = () => {
     let firstSectionTextPointer = 0
     let secondSectionTextPointer = 0
     let thirdSectionTextPointer = 0
-    const firstSectionTextFull = 'Marcus Boay'
-    const secondSectionTextFull = 'Software Engineer'
-    const thirdSectionTextFull =
-        'Delivering quality code with excellent user experience'
 
     // title text animation
     useEffect(() => {
