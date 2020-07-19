@@ -19,7 +19,6 @@ const App = () => {
                 <HashRouter>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/tree-viz" component={TreeViz} />
-                    <Route path="*" component={NotFound} />
                 </HashRouter>
             </StyledAppLayout>
         </Provider>
