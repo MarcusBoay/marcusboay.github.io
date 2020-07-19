@@ -1,5 +1,10 @@
 import React from 'react'
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import {
+    Switch,
+    Route,
+    BrowserRouter as Router,
+    HashRouter,
+} from 'react-router-dom'
 import Home from './pages/Home/Home'
 import TreeViz from './pages/TreeViz/TreeViz'
 import NotFound from './pages/NotFound/NotFound'
@@ -11,19 +16,11 @@ const App = () => {
     return (
         <Provider store={store}>
             <StyledAppLayout>
-                <Router>
-                    <Switch>
-                        <Route exact path="/">
-                            <Home />
-                        </Route>
-                        <Route exact path="/tree-viz">
-                            <TreeViz />
-                        </Route>
-                        <Route path="*">
-                            <NotFound />
-                        </Route>
-                    </Switch>
-                </Router>
+                <HashRouter>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/tree-viz" component={TreeViz} />
+                    <Route path="*" component={NotFound} />
+                </HashRouter>
             </StyledAppLayout>
         </Provider>
     )
