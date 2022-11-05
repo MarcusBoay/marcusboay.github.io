@@ -37,10 +37,6 @@ const personLinks = [
         title: 'GitHub',
         url: 'https://github.com/MarcusBoay',
     },
-    {
-        title: 'Twitter',
-        url: 'https://twitter.com/BoayMarcus',
-    },
 ] as Array<SectionLinkModel>
 const projects = [
     {
@@ -55,19 +51,6 @@ const projects = [
         links: [{ title: 'Website', url: '/#/tree-viz' }],
         image: treeVizImage,
         imageAlt: 'tree visualizer image',
-    },
-    {
-        title: 'HackED',
-        year: 2018,
-        role: 'VP Finance',
-        description: [
-            'As Marcus is a tech advocate, one of his goals is to get other people interested in the tech sphere.',
-            'As such, he volunteered to be the VP Finance for HackED Beta 2017 and HackED 2018.',
-            'The event gained over 100 student participants as well as a few industry sponsors.',
-        ],
-        links: [{ title: 'Website', url: 'https://hacked.compeclub.com' }],
-        image: hackedImage,
-        imageAlt: 'hacked post-event image',
     },
     {
         title: 'Kontrol',
