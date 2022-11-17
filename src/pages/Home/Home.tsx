@@ -25,9 +25,9 @@ import treeVizImage from '../../images/tree-viz.png'
 import hackedImage from '../../images/hacked.jpg'
 
 const firstSectionTextFull = 'Marcus Boay'
-const secondSectionTextFull = 'Software Engineer'
+const secondSectionTextFull = 'Software Developer'
 const thirdSectionTextFull =
-    'Crafting quality code with excellent user experience'
+    ''
 const personLinks = [
     {
         title: 'LinkedIn',
@@ -38,41 +38,7 @@ const personLinks = [
         url: 'https://github.com/MarcusBoay',
     },
 ] as Array<SectionLinkModel>
-const projects = [
-    {
-        title: 'Tree Visualizer',
-        year: 2019,
-        role: 'Developer',
-        description: [
-            'Web-based visualizer to show classic tree traversal algorithms.'
-        ],
-        links: [{ title: 'Website', url: '/#/tree-viz' }],
-        image: treeVizImage,
-        imageAlt: 'tree visualizer image',
-    },
-    {
-        title: 'Kontrol',
-        year: 2017,
-        role: 'Producer, Developer, Designer',
-        description: [
-            'A twin-stick shooter made using Unity and C# over 9 months while balancing internship and school work.',
-            'The game has 3 hand-crafted levels with various enemies and bosses.',
-            'Kontrol has been front-paged on both Newgrounds and Kongregate and has garnered over 22,000 plays.',
-        ],
-        links: [
-            {
-                title: 'GitHub',
-                url: 'https://github.com/MarcusBoay/Kontrol',
-            },
-            {
-                title: 'NewGrounds',
-                url: 'https://www.newgrounds.com/portal/view/704281',
-            },
-        ],
-        image: kontrolImage,
-        imageAlt: 'kontrol gameplay image',
-    },
-] as Array<SectionInfoModel>
+const projects = [] as Array<SectionInfoModel>
 const Home: React.FunctionComponent<{}> = () => {
     const [firstSectionText, setFirstSectionText] = useState<string>('')
     const [secondSectionText, setSecondSectionText] = useState<string>('')
