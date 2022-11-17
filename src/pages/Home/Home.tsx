@@ -44,9 +44,7 @@ const projects = [
         year: 2019,
         role: 'Developer',
         description: [
-            'Web-based visualizer to show classic tree traversal algorithms.',
-            "As Marcus is a tech advocate and a Computer Science student, he understands and empathizes with other students who struggle with algorithms and data structures even though he has been a finalist in Communitech's Code to Win challenge in 2018 and 2019. He wants to help other people learn and get better at algorithms and data structures.",
-            'As a result, in order to aid other students, he created this tree traversal visualizer that has classic tree traversal algorithms such as pre-order, in-order, post-order and level-order.',
+            'Web-based visualizer to show classic tree traversal algorithms.'
         ],
         links: [{ title: 'Website', url: '/#/tree-viz' }],
         image: treeVizImage,
@@ -58,7 +56,6 @@ const projects = [
         role: 'Producer, Developer, Designer',
         description: [
             'A twin-stick shooter made using Unity and C# over 9 months while balancing internship and school work.',
-            "When Marcus was a teenager, he adored old-school bullet hell games such as Gradius and R-Type. He found that these games aren't as popular as they used to be. He decided to set a goal to create such a game which involved self-studying game design, game programming, art and project management.",
             'The game has 3 hand-crafted levels with various enemies and bosses.',
             'Kontrol has been front-paged on both Newgrounds and Kongregate and has garnered over 22,000 plays.',
         ],
