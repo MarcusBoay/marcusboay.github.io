@@ -20,9 +20,6 @@ import {
     StyledHomeHeroContainer,
 } from './StyledHome'
 import { SectionInfoModel, SectionLinkModel } from '../../models/Home'
-import kontrolImage from '../../images/kontrol.png'
-import treeVizImage from '../../images/tree-viz.png'
-import hackedImage from '../../images/hacked.jpg'
 
 const firstSectionTextFull = 'Marcus Boay'
 const secondSectionTextFull = 'Software Developer'
